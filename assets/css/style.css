@@ -1,0 +1,11 @@
+/* tr {
+  line-height: 0px;
+}
+
+tr td {
+  padding: 7px 7px !important;
+} */
+
+.ant-upload-list-text {
+  width: fit-content;
+}
