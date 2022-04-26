@@ -29,7 +29,7 @@ const accountColumns = [
     width: '10%',
   },
   {
-    title: 'Trạng thái',
+    title: 'T/thái',
     dataIndex: 'status',
     width: '7%',
   },
@@ -53,7 +53,7 @@ const accountColumns = [
     dataIndex: 'completedAt',
     width: '10%',
   },
-]
+];
 
 const deviceColumns = [
   {
@@ -133,7 +133,7 @@ const deviceData: DeviceType[] = [
     report: '0 / 0',
     status: '10:15: Hoàn thành',
   },
-]
+];
 
 const accountData: AccountType[] = [
   {
@@ -148,8 +148,8 @@ const accountData: AccountType[] = [
     groupCount: 10,
     device: 'SGP521',
     completedAt: '26-04-2022 14:03',
-  }
-]
+  },
+];
 
 const deviceRowSelection = {
   onChange: (selectedRowKeys: React.Key[], selectedRows: DeviceType[]) => {
@@ -179,82 +179,127 @@ const accountRowSelection = {
   }),
 };
 
-export const ChangePage = () => {
-  const [fileList, setFileList] = useState([])
-  const [importing, setImporting] = useState(false)
+const ChangePage = () => {
+  const [fileList, setFileList] = useState([]);
+  const [importing, setImporting] = useState(false);
   const handleImport = () => {
-    setImporting(true)
+    setImporting(true);
   };
   const props = {
+    // eslint-disable-next-line @typescript-eslint/ban-ts-comment
     // @ts-ignore
     onRemove: (file) => {
+      // eslint-disable-next-line @typescript-eslint/ban-ts-comment
       // @ts-ignore
       const index = fileList.indexOf(file);
       const newFileList = fileList.slice();
       newFileList.splice(index, 1);
-      setFileList(newFileList)
+      setFileList(newFileList);
     },
+    // eslint-disable-next-line @typescript-eslint/ban-ts-comment
     // @ts-ignore
     beforeUpload: (file) => {
+      // eslint-disable-next-line @typescript-eslint/ban-ts-comment
       // @ts-ignore
-      setFileList([...fileList, file])
-      return false
+      setFileList([...fileList, file]);
+      return false;
     },
     fileList,
   };
-  // @ts-ignore
-  const uploadComponent = <Upload {...props}>
-    <Button icon={<UploadOutlined />}>Select File</Button>
-  </Upload>
-  return <>
-      <div style={{height: "700px", overflow: "auto", backgroundColor: "white"}}>
-        <Divider orientation="left" orientationMargin={20}>Thông tin Acccount</Divider>
+  const uploadComponent = (
+    // eslint-disable-next-line react/jsx-props-no-spreading
+    <Upload {...props}>
+      <Button icon={<UploadOutlined />}>Select File</Button>
+    </Upload>
+  );
+  return (
+    <>
+      <div
+        style={{
+          height: '700px',
+          overflow: 'auto',
+          backgroundColor: 'white',
+        }}
+      >
+        <Divider orientation="left" orientationMargin={20}>
+          Thông tin Acccount
+        </Divider>
+        <Row
+          style={{
+            paddingRight: '20px',
+            paddingBottom: '20px',
+            display: 'flex',
+            justifyContent: 'end',
+          }}
+        >
+          {uploadComponent}
+          <Button
+            type="primary"
+            onClick={handleImport}
+            disabled={fileList.length === 0}
+            loading={importing}
+            style={{ marginLeft: 30 }}
+          >
+            {importing ? 'Importing...' : 'Start Import'}
+          </Button>
+        </Row>
         <Table
           rowSelection={{
             type: 'checkbox',
-            ...{rowSelection: accountRowSelection},
+            ...{ rowSelection: accountRowSelection },
           }}
           columns={accountColumns}
           dataSource={accountData}
           pagination={false}
         />
       </div>
-      <div style={{backgroundColor: "white"}}>
+      <div
+        style={{
+          backgroundColor: 'white',
+        }}
+      >
         <Row>
           <Col span={12}>
-            <Divider orientation="left" orientationMargin={20}>Config Account</Divider>
-            <div style={{paddingLeft: "20px"}}>
-              {uploadComponent}
-              <Button
-                type="primary"
-                onClick={handleImport}
-                disabled={fileList.length === 0}
-                loading={importing}
-                style={{ marginTop: 16 }}
-              >
-                {importing ? 'Importing...' : 'Start Import'}
-              </Button>
-            </div>
+            <Divider orientation="left" orientationMargin={20}>
+              Config Account
+            </Divider>
           </Col>
 
           <Col span={12}>
-            <Divider orientation="left" orientationMargin={20}>Thông tin Device</Divider>
-            <div style={{height: "400px", overflow: "auto", backgroundColor: "white"}}>
+            <Divider orientation="left" orientationMargin={20}>
+              Thông tin Device
+            </Divider>
+            <div
+              style={{
+                height: '400px',
+                overflow: 'auto',
+                backgroundColor: 'white',
+              }}
+            >
               <Table
                 rowSelection={{
                   type: 'checkbox',
-                  ...{rowSelection: deviceRowSelection},
+                  ...{ rowSelection: deviceRowSelection },
                 }}
                 columns={deviceColumns}
                 dataSource={deviceData}
                 pagination={false}
               />
             </div>
-            <div style={{marginTop: "10px", marginBottom: "10px", textAlign: "center"}}>
+            <div
+              style={{
+                marginTop: '10px',
+                marginBottom: '10px',
+                textAlign: 'center',
+              }}
+            >
               <Button type="primary">Load device</Button>
             </div>
           </Col>
         </Row>
       </div>
     </>
-}
+  );
+};
+
+export default ChangePage;

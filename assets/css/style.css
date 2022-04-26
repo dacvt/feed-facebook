@@ -1,11 +1,17 @@
 /* tr {
   line-height: 0px;
-}
-
-tr td {
-  padding: 7px 7px !important;
 } */
 
-.ant-upload-list-text {
-  width: fit-content;
+tr td {
+  padding: 4px 4px !important;
 }
+
+.ant-upload-list-text {
+  width: 170px;
+}
+
+/* .ant-layout-sider-children {
+  flex: 0 0 50px;
+  max-width: none !important;
+  min-width: none !important;
+} */

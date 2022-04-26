@@ -9,7 +9,7 @@ import {
 } from '@ant-design/icons';
 import './App.css';
 import React from 'react';
-import { ChangePage } from 'component/ChangePage';
+import ChangePage from 'component/ChangePage';
 
 const { Sider, Content } = Layout;
 
@@ -20,7 +20,7 @@ function getItem(
   key: React.Key,
   icon?: React.ReactNode,
   children?: MenuItem[],
-  type?: 'group',
+  type?: 'group'
 ): MenuItem {
   return {
     key,
@@ -41,23 +41,28 @@ const items: MenuItem[] = [
 
 const MainPage = () => {
   const [currentPage, setCurrentPage] = React.useState('menu_change');
-  const onClick: MenuProps['onClick'] = e => {
-    const key: string = e.key
-    setCurrentPage(key)
+  const onClick: MenuProps['onClick'] = (e) => {
+    const { key } = e;
+    setCurrentPage(key);
   };
   let page: any;
-  switch(currentPage) {
+  switch (currentPage) {
     case 'menu_change':
-      page = <ChangePage />
-      break
+      page = <ChangePage />;
+      break;
+    default:
+      break;
   }
   return (
     <Layout>
-      <Sider collapsed={true}
+      <Sider
+        collapsed
         style={{
           backgroundColor: 'white',
           marginTop: '0px',
-          marginBottom: '0px'}}>
+          marginBottom: '0px',
+        }}
+      >
         <Menu
           defaultSelectedKeys={[currentPage]}
           mode="inline"
@@ -71,7 +76,8 @@ const MainPage = () => {
           style={{
             padding: 24,
             minHeight: 280,
-          }}>
+          }}
+        >
           {page}
         </Content>
       </Layout>
